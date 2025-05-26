@@ -67,6 +67,28 @@ Resources:
           Arn: !GetAtt
             - CloudWatchLogGroup
             - Arn
+  SCPErrorsLogGroupEventBridgePolicy:
+    Type: AWS::Logs::ResourcePolicy
+    Properties:
+      PolicyDocument: !Sub |
+        {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Sid": "AllowEventBridgeToWriteSCPErrorLogs",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "events.amazonaws.com"
+              },
+              "Action": [
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+              ],
+              "Resource": "${CloudWatchLogGroup.Arn}"
+            }
+          ]
+        }
+      PolicyName: "EventBridgeToSCPErrorsLogGroupPolicy"
 Outputs:
   EventBusArn:
     Description: ARN of the event bus

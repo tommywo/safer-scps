@@ -40,8 +40,9 @@ Resources:
         detail:
           errorCode:
             - AccessDenied
+            - Client.UnauthorizedOperation
           errorMessage:
-            - suffix: deny in a service control policy
+            - wildcard: "*service control policy*"
       Name: scp-errors-rule
       State: ENABLED
       Targets:
